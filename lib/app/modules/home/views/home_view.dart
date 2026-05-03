@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -163,52 +165,57 @@ class HomeView extends GetView<HomeController> {
                       const [Color(0xFF10B981), Color(0xFF3B82F6)],
                       () => Get.toNamed(Routes.findjob),
                     ),
-
+                    const SizedBox(height: 120),
                   ],
                 ),
               ),
             ),
           ),
-        ],
-      ),
-      bottomNavigationBar: Container(
-        color: const Color(0xFF0F172A),
-        padding: const EdgeInsets.only(
-          left: 24,
-          right: 24,
-          bottom: 20,
-          top: 10,
-        ),
-        child: Container(
-          height: 70,
-          decoration: BoxDecoration(
-            color: const Color(0xFF1E293B).withValues(alpha: 0.95),
-            borderRadius: BorderRadius.circular(25),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.3),
-                blurRadius: 20,
-                offset: const Offset(0, 10),
+
+          // Floating nav bar overlay
+          Positioned(
+            bottom: MediaQuery.of(context).viewPadding.bottom + 8,
+            left: 24,
+            right: 24,
+            child: Container(
+              height: 70,
+              decoration: BoxDecoration(
+                color: const Color(0xFF1E293B).withValues(alpha: 0.7),
+                borderRadius: BorderRadius.circular(25),
+                border: Border.all(
+                  color: Colors.white.withValues(alpha: 0.1),
+                ),
               ),
-            ],
-            border: Border.all(color: Colors.white10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildNavItem(Icons.home_rounded, true, onTap: () {}),
+                  _buildNavItem(
+                    Icons.work_outline,
+                    false,
+                    onTap: () => Get.toNamed(Routes.findjob),
+                  ),
+                  _buildNavItem(
+                    Icons.add_circle_rounded,
+                    false,
+                    isSpecial: true,
+                    onTap: () => Get.toNamed(Routes.createjob),
+                  ),
+                  _buildNavItem(
+                    Icons.description_outlined,
+                    false,
+                    onTap: () => Get.toNamed(Routes.cvshortlisting),
+                  ),
+                  _buildNavItem(
+                    Icons.person_outline,
+                    false,
+                    onTap: () => Get.toNamed(Routes.personalizatiion),
+                  ),
+                ],
+              ),
+            ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildNavItem(Icons.home_rounded, true, onTap: () {}),
-              _buildNavItem(Icons.work_outline, false,
-                  onTap: () => Get.toNamed(Routes.findjob)),
-              _buildNavItem(Icons.add_circle_rounded, false,
-                  isSpecial: true,
-                  onTap: () => Get.toNamed(Routes.createjob)),
-              _buildNavItem(Icons.description_outlined, false,
-                  onTap: () => Get.toNamed(Routes.cvshortlisting)),
-              _buildNavItem(Icons.person_outline, false,
-                  onTap: () => Get.toNamed(Routes.personalizatiion)),
-            ],
-          ),
-        ),
+        ],
       ),
     );
   }
@@ -304,8 +311,12 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Widget _buildNavItem(IconData icon, bool isActive,
-      {bool isSpecial = false, VoidCallback? onTap}) {
+  Widget _buildNavItem(
+    IconData icon,
+    bool isActive, {
+    bool isSpecial = false,
+    VoidCallback? onTap,
+  }) {
     return GestureDetector(
       onTap: onTap,
       child: Column(
