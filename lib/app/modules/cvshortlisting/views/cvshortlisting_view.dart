@@ -8,16 +8,10 @@ class CvshortlistingView extends GetView<CvshortlistingController> {
   const CvshortlistingView({super.key});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('CvshortlistingView'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          'CvshortlistingView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+    return const Center(
+      child: Text(
+        'CvshortlistingView is working',
+        style: TextStyle(fontSize: 20, color: Colors.white),
       ),
     );
   }

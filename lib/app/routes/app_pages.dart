@@ -10,6 +10,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/navbar/bindings/navbar_binding.dart';
+import '../modules/navbar/views/navbar_view.dart';
 import '../modules/personalizatiion/bindings/personalizatiion_binding.dart';
 import '../modules/personalizatiion/views/personalizatiion_view.dart';
 import '../modules/resetpassword/bindings/resetpassword_binding.dart';
@@ -26,7 +28,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const initial = Routes.home;
+  static const initial = Routes.login;
 
   static final routes = [
     GetPage(
@@ -82,6 +84,11 @@ class AppPages {
       name: _Paths.createjob,
       page: () => const CreatejobView(),
       binding: CreatejobBinding(),
+    ),
+    GetPage(
+      name: _Paths.navbar,
+      page: () => const NavbarView(),
+      binding: NavbarBinding(),
     ),
   ];
 }

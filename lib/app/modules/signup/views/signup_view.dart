@@ -19,13 +19,18 @@ class SignupView extends GetView<SignupController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 10),
-              Text(
-                'CVJACHAI',
-                style: GoogleFonts.inter(
-                  color: Colors.white,
-                  fontSize: 32,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 1.2,
+              ShaderMask(
+                shaderCallback: (bounds) => const LinearGradient(
+                  colors: [Color(0xFF38BDF8), Color(0xFF9D4EDD)],
+                ).createShader(bounds),
+                child: Text(
+                  'CVJACHAI',
+                  style: GoogleFonts.inter(
+                    color: Colors.white,
+                    fontSize: 36,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 2.0,
+                  ),
                 ),
               ),
               const SizedBox(height: 8),
@@ -115,14 +120,14 @@ class SignupView extends GetView<SignupController> {
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF6366F1).withValues(alpha: 0.3),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
+                      color: const Color(0xFF8B5CF6).withValues(alpha: 0.4),
+                      blurRadius: 15,
+                      offset: const Offset(0, 8),
                     ),
                   ],
                 ),
                 child: ElevatedButton(
-                  onPressed: () => Get.offAllNamed(Routes.home),
+                  onPressed: () => Get.offAllNamed(Routes.navbar),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,
                     shadowColor: Colors.transparent,
@@ -180,18 +185,21 @@ class SignupView extends GetView<SignupController> {
                         shape: BoxShape.circle,
                       ),
                       child: Image.network(
-                        'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png',
-                        height: 14,
-                        width: 14,
+                        'https://www.gstatic.com/images/branding/product/2x/googleg_48dp.png',
+                        height: 18,
+                        width: 18,
                       ),
                     ),
                     const SizedBox(width: 12),
-                    Text(
-                      'Google অ্যাকাউন্ট দিয়ে সাইন-আপ করুন',
-                      style: GoogleFonts.hindSiliguri(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                    Flexible(
+                      child: Text(
+                        'Google অ্যাকাউন্ট দিয়ে সাইন-আপ করুন',
+                        style: GoogleFonts.hindSiliguri(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],

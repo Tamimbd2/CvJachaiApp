@@ -11,9 +11,7 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF0F172A),
-      body: Stack(
+    return Stack(
         children: [
           // Background Gradient Glows
           Positioned(
@@ -170,52 +168,7 @@ class HomeView extends GetView<HomeController> {
               ),
             ),
           ),
-
-          // Floating nav bar overlay
-          Positioned(
-            bottom: MediaQuery.of(context).viewPadding.bottom + 8,
-            left: 24,
-            right: 24,
-            child: Container(
-              height: 70,
-              decoration: BoxDecoration(
-                color: const Color(0xFF1E293B).withValues(alpha: 0.7),
-                borderRadius: BorderRadius.circular(25),
-                border: Border.all(
-                  color: Colors.white.withValues(alpha: 0.1),
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildNavItem(Icons.home_rounded, true, onTap: () {}),
-                  _buildNavItem(
-                    Icons.work_outline,
-                    false,
-                    onTap: () => Get.toNamed(Routes.findjob),
-                  ),
-                  _buildNavItem(
-                    Icons.add_circle_rounded,
-                    false,
-                    isSpecial: true,
-                    onTap: () => Get.toNamed(Routes.createjob),
-                  ),
-                  _buildNavItem(
-                    Icons.description_outlined,
-                    false,
-                    onTap: () => Get.toNamed(Routes.cvshortlisting),
-                  ),
-                  _buildNavItem(
-                    Icons.person_outline,
-                    false,
-                    onTap: () => Get.toNamed(Routes.personalizatiion),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+      ],
     );
   }
 
@@ -310,57 +263,5 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Widget _buildNavItem(
-    IconData icon,
-    bool isActive, {
-    bool isSpecial = false,
-    VoidCallback? onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (isSpecial)
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF38BDF8), Color(0xFF9D4EDD)],
-                ),
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xFF38BDF8).withValues(alpha: 0.3),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Icon(icon, color: Colors.white, size: 28),
-            )
-          else
-            Column(
-              children: [
-                Icon(
-                  icon,
-                  color: isActive ? const Color(0xFF38BDF8) : Colors.grey[500],
-                  size: 26,
-                ),
-                if (isActive)
-                  Container(
-                    margin: const EdgeInsets.only(top: 4),
-                    width: 4,
-                    height: 4,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFF38BDF8),
-                    ),
-                  ),
-              ],
-            ),
-        ],
-      ),
-    );
-  }
+
 }
