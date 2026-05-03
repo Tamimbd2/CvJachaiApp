@@ -48,9 +48,9 @@ class FindjobView extends GetView<FindjobController> {
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.cyan.withOpacity(0.1),
+                  color: Colors.cyan.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: Colors.cyan.withOpacity(0.3)),
+                  border: Border.all(color: Colors.cyan.withValues(alpha: 0.3)),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -154,11 +154,11 @@ class FindjobView extends GetView<FindjobController> {
         child: Container(
           height: 70,
           decoration: BoxDecoration(
-            color: const Color(0xFF1E293B).withOpacity(0.95),
+            color: const Color(0xFF1E293B).withValues(alpha: 0.95),
             borderRadius: BorderRadius.circular(25),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.3),
+                color: Colors.black.withValues(alpha: 0.3),
                 blurRadius: 20,
                 offset: const Offset(0, 10),
               ),
@@ -171,24 +171,24 @@ class FindjobView extends GetView<FindjobController> {
               _buildNavItem(
                 Icons.home_rounded,
                 false,
-                onTap: () => Get.offAllNamed(Routes.HOME),
+                onTap: () => Get.offAllNamed(Routes.home),
               ),
               _buildNavItem(Icons.work_outline, true, onTap: () {}),
               _buildNavItem(
                 Icons.add_circle_rounded,
                 false,
                 isSpecial: true,
-                onTap: () => Get.toNamed(Routes.CREATEJOB),
+                onTap: () => Get.toNamed(Routes.createjob),
               ),
               _buildNavItem(
                 Icons.description_outlined,
                 false,
-                onTap: () => Get.toNamed(Routes.CVSHORTLISTING),
+                onTap: () => Get.toNamed(Routes.cvshortlisting),
               ),
               _buildNavItem(
                 Icons.person_outline,
                 false,
-                onTap: () => Get.toNamed(Routes.PERSONALIZATIION),
+                onTap: () => Get.toNamed(Routes.personalizatiion),
               ),
             ],
           ),
@@ -218,7 +218,7 @@ class FindjobView extends GetView<FindjobController> {
                 borderRadius: BorderRadius.circular(15),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF38BDF8).withOpacity(0.3),
+                    color: const Color(0xFF38BDF8).withValues(alpha: 0.3),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
@@ -263,10 +263,10 @@ class FindjobView extends GetView<FindjobController> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: const Color(0xFF1E293B).withOpacity(0.4),
+        color: const Color(0xFF1E293B).withValues(alpha: 0.4),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: isExpanded ? Colors.cyan.withOpacity(0.3) : Colors.white10,
+          color: isExpanded ? Colors.cyan.withValues(alpha: 0.3) : Colors.white10,
         ),
       ),
       child: Column(
@@ -280,7 +280,7 @@ class FindjobView extends GetView<FindjobController> {
                 height: 45,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.05),
+                  color: Colors.white.withValues(alpha: 0.05),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
@@ -408,7 +408,7 @@ class FindjobView extends GetView<FindjobController> {
                     vertical: 12,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.05),
+                    color: Colors.white.withValues(alpha: 0.05),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: Colors.white10),
                   ),
@@ -472,7 +472,7 @@ class FindjobView extends GetView<FindjobController> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF00D2FF).withOpacity(0.3),
+            color: const Color(0xFF00D2FF).withValues(alpha: 0.3),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),

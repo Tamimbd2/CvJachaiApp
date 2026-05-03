@@ -26,60 +26,60 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.HOME;
+  static const initial = Routes.home;
 
   static final routes = [
     GetPage(
-      name: _Paths.HOME,
+      name: _Paths.home,
       page: () => const HomeView(),
       binding: HomeBinding(),
       transition: Transition.noTransition,
     ),
     GetPage(
-      name: _Paths.LOGIN,
+      name: _Paths.login,
       page: () => const LoginView(),
       binding: LoginBinding(),
     ),
     GetPage(
-      name: _Paths.SIGNUP,
+      name: _Paths.signup,
       page: () => const SignupView(),
       binding: SignupBinding(),
     ),
     GetPage(
-      name: _Paths.SENDOTP,
+      name: _Paths.sendotp,
       page: () => const SendotpView(),
       binding: SendotpBinding(),
     ),
     GetPage(
-      name: _Paths.VERIFYOTP,
+      name: _Paths.verifyotp,
       page: () => const VerifyotpView(),
       binding: VerifyotpBinding(),
     ),
     GetPage(
-      name: _Paths.RESETPASSWORD,
+      name: _Paths.resetpassword,
       page: () => const ResetpasswordView(),
       binding: ResetpasswordBinding(),
     ),
     GetPage(
-      name: _Paths.FINDJOB,
+      name: _Paths.findjob,
       page: () => const FindjobView(),
       binding: FindjobBinding(),
       transition: Transition.noTransition,
     ),
     GetPage(
-      name: _Paths.CVSHORTLISTING,
+      name: _Paths.cvshortlisting,
       page: () => const CvshortlistingView(),
       binding: CvshortlistingBinding(),
       transition: Transition.noTransition,
     ),
     GetPage(
-      name: _Paths.PERSONALIZATIION,
+      name: _Paths.personalizatiion,
       page: () => const PersonalizatiionView(),
       binding: PersonalizatiionBinding(),
       transition: Transition.noTransition,
     ),
     GetPage(
-      name: _Paths.CREATEJOB,
+      name: _Paths.createjob,
       page: () => const CreatejobView(),
       binding: CreatejobBinding(),
     ),

@@ -23,7 +23,7 @@ class HomeView extends GetView<HomeController> {
               height: 300,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: const Color(0xFF38BDF8).withOpacity(0.1),
+                color: const Color(0xFF38BDF8).withValues(alpha: 0.1),
               ),
             ),
           ),
@@ -35,7 +35,7 @@ class HomeView extends GetView<HomeController> {
               height: 400,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: const Color(0xFF9D4EDD).withOpacity(0.05),
+                color: const Color(0xFF9D4EDD).withValues(alpha: 0.05),
               ),
             ),
           ),
@@ -101,7 +101,7 @@ class HomeView extends GetView<HomeController> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF1E293B).withOpacity(0.6),
+                        color: const Color(0xFF1E293B).withValues(alpha: 0.6),
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(color: Colors.white10),
                       ),
@@ -145,7 +145,7 @@ class HomeView extends GetView<HomeController> {
                       'Find best candidates using AI',
                       Icons.description_outlined,
                       const [Color(0xFF00D2FF), Color(0xFF3A7BD5)],
-                      () => Get.toNamed(Routes.CVSHORTLISTING),
+                      () => Get.toNamed(Routes.cvshortlisting),
                     ),
                     const SizedBox(height: 16),
                     _buildActionCard(
@@ -153,7 +153,7 @@ class HomeView extends GetView<HomeController> {
                       'Get tailored AI career insights',
                       Icons.person_outline,
                       const [Color(0xFF6366F1), Color(0xFFA855F7)],
-                      () => Get.toNamed(Routes.PERSONALIZATIION),
+                      () => Get.toNamed(Routes.personalizatiion),
                     ),
                     const SizedBox(height: 16),
                     _buildActionCard(
@@ -161,7 +161,7 @@ class HomeView extends GetView<HomeController> {
                       'Jobs matching your skills',
                       Icons.work_outline,
                       const [Color(0xFF10B981), Color(0xFF3B82F6)],
-                      () => Get.toNamed(Routes.FINDJOB),
+                      () => Get.toNamed(Routes.findjob),
                     ),
 
                   ],
@@ -182,11 +182,11 @@ class HomeView extends GetView<HomeController> {
         child: Container(
           height: 70,
           decoration: BoxDecoration(
-            color: const Color(0xFF1E293B).withOpacity(0.95),
+            color: const Color(0xFF1E293B).withValues(alpha: 0.95),
             borderRadius: BorderRadius.circular(25),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.3),
+                color: Colors.black.withValues(alpha: 0.3),
                 blurRadius: 20,
                 offset: const Offset(0, 10),
               ),
@@ -198,14 +198,14 @@ class HomeView extends GetView<HomeController> {
             children: [
               _buildNavItem(Icons.home_rounded, true, onTap: () {}),
               _buildNavItem(Icons.work_outline, false,
-                  onTap: () => Get.toNamed(Routes.FINDJOB)),
+                  onTap: () => Get.toNamed(Routes.findjob)),
               _buildNavItem(Icons.add_circle_rounded, false,
                   isSpecial: true,
-                  onTap: () => Get.toNamed(Routes.CREATEJOB)),
+                  onTap: () => Get.toNamed(Routes.createjob)),
               _buildNavItem(Icons.description_outlined, false,
-                  onTap: () => Get.toNamed(Routes.CVSHORTLISTING)),
+                  onTap: () => Get.toNamed(Routes.cvshortlisting)),
               _buildNavItem(Icons.person_outline, false,
-                  onTap: () => Get.toNamed(Routes.PERSONALIZATIION)),
+                  onTap: () => Get.toNamed(Routes.personalizatiion)),
             ],
           ),
         ),
@@ -218,7 +218,7 @@ class HomeView extends GetView<HomeController> {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: const Color(0xFF1E293B).withOpacity(0.5),
+          color: const Color(0xFF1E293B).withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: Colors.white10),
         ),
@@ -255,7 +255,7 @@ class HomeView extends GetView<HomeController> {
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: const Color(0xFF1E293B).withOpacity(0.6),
+          color: const Color(0xFF1E293B).withValues(alpha: 0.6),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: Colors.white10),
         ),
@@ -321,7 +321,7 @@ class HomeView extends GetView<HomeController> {
                 borderRadius: BorderRadius.circular(15),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF38BDF8).withOpacity(0.3),
+                    color: const Color(0xFF38BDF8).withValues(alpha: 0.3),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),

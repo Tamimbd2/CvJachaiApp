@@ -115,14 +115,14 @@ class SignupView extends GetView<SignupController> {
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF6366F1).withOpacity(0.3),
+                      color: const Color(0xFF6366F1).withValues(alpha: 0.3),
                       blurRadius: 12,
                       offset: const Offset(0, 4),
                     ),
                   ],
                 ),
                 child: ElevatedButton(
-                  onPressed: () => Get.offAllNamed(Routes.HOME),
+                  onPressed: () => Get.offAllNamed(Routes.home),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,
                     shadowColor: Colors.transparent,
@@ -166,7 +166,7 @@ class SignupView extends GetView<SignupController> {
                 width: double.infinity,
                 height: 56,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1E293B).withOpacity(0.8),
+                  color: const Color(0xFF1E293B).withValues(alpha: 0.8),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: Colors.white10),
                 ),
@@ -245,7 +245,7 @@ class SignupView extends GetView<SignupController> {
             prefixIcon:
                 Icon(Icons.person_outline, color: Colors.grey[400], size: 20),
             filled: true,
-            fillColor: const Color(0xFF1E293B).withOpacity(0.4),
+            fillColor: const Color(0xFF1E293B).withValues(alpha: 0.4),
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             enabledBorder: OutlineInputBorder(
@@ -289,7 +289,7 @@ class SignupView extends GetView<SignupController> {
             ? Icon(Icons.visibility_outlined, color: Colors.grey[600], size: 20)
             : null,
         filled: true,
-        fillColor: const Color(0xFF1E293B).withOpacity(0.4),
+        fillColor: const Color(0xFF1E293B).withValues(alpha: 0.4),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),

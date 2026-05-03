@@ -62,7 +62,7 @@ class CreatejobView extends GetView<CreatejobController> {
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: const Color(0xFF1E293B).withOpacity(0.5),
+                color: const Color(0xFF1E293B).withValues(alpha: 0.5),
                 borderRadius: BorderRadius.circular(24),
                 border: Border.all(color: Colors.white10),
               ),
@@ -115,7 +115,7 @@ class CreatejobView extends GetView<CreatejobController> {
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF00D2FF).withOpacity(0.3),
+                          color: const Color(0xFF00D2FF).withValues(alpha: 0.3),
                           blurRadius: 12,
                           offset: const Offset(0, 4),
                         ),
@@ -181,7 +181,7 @@ class CreatejobView extends GetView<CreatejobController> {
             hintText: hint,
             hintStyle: GoogleFonts.inter(color: Colors.grey[600], fontSize: 13),
             filled: true,
-            fillColor: const Color(0xFF0F172A).withOpacity(0.5),
+            fillColor: const Color(0xFF0F172A).withValues(alpha: 0.5),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,
               vertical: 14,
