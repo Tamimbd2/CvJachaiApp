@@ -82,32 +82,7 @@ class SignupView extends GetView<SignupController> {
               ),
               const SizedBox(height: 16),
 
-              // Remember me
-              Row(
-                children: [
-                  SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: Checkbox(
-                      value: false,
-                      onChanged: (v) {},
-                      side: const BorderSide(color: Colors.white24),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Remember me',
-                    style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontSize: 13,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 20),
 
               // Sign Up Button
               Container(
