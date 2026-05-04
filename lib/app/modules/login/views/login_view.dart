@@ -49,6 +49,7 @@ class LoginView extends GetView<LoginController> {
               _buildTextField(
                 hint: 'name@company.com',
                 icon: Icons.email_outlined,
+                controller: controller.emailController,
               ),
               const SizedBox(height: 24),
 
@@ -59,6 +60,7 @@ class LoginView extends GetView<LoginController> {
                 hint: '••••••••',
                 icon: Icons.shield_outlined,
                 isPassword: true,
+                controller: controller.passwordController,
               ),
               const SizedBox(height: 16),
 
@@ -122,22 +124,33 @@ class LoginView extends GetView<LoginController> {
                     ),
                   ],
                 ),
-                child: ElevatedButton(
-                  onPressed: () => Get.offAllNamed(Routes.navbar),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    shadowColor: Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                child: Obx(
+                  () => ElevatedButton(
+                    onPressed: controller.isLoading.value ? null : () => controller.login(),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    'Login',
-                    style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    child: controller.isLoading.value
+                        ? const SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            ),
+                          )
+                        : Text(
+                            'Login',
+                            style: GoogleFonts.inter(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                   ),
                 ),
               ),
@@ -249,8 +262,10 @@ class LoginView extends GetView<LoginController> {
     required String hint,
     required IconData icon,
     bool isPassword = false,
+    TextEditingController? controller,
   }) {
     return TextField(
+      controller: controller,
       obscureText: isPassword,
       style: const TextStyle(color: Colors.white, fontSize: 15),
       decoration: InputDecoration(
