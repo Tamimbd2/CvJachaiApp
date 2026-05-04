@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import '../../../data/models/user_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../data/services/api_service.dart';
 
