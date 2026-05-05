@@ -14,6 +14,7 @@ abstract class Routes {
   static const createjob = _Paths.createjob;
   static const navbar = _Paths.navbar;
   static const jobApply = _Paths.jobApply;
+  static const myJobs = _Paths.myJobs;
 }
 
 abstract class _Paths {
@@ -30,4 +31,5 @@ abstract class _Paths {
   static const createjob = '/createjob';
   static const navbar = '/navbar';
   static const jobApply = '/job-apply';
+  static const myJobs = '/my-jobs';
 }

@@ -45,5 +45,13 @@ class ApiService extends getx.GetxService {
     );
   }
 
-  // Add other methods like put, delete as needed
+  Future<Response> delete(String path, {Map<String, dynamic>? queryParameters, Options? options}) async {
+    return await _dio.delete(
+      path,
+      queryParameters: queryParameters,
+      options: options,
+    );
+  }
+
+  // Add other methods like put as needed
 }

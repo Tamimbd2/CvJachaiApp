@@ -65,6 +65,14 @@ class NavbarView extends GetView<NavbarController> {
             ),
           ),
           ListTile(
+            leading: const Icon(Icons.work_history_outlined, color: Color(0xFF38BDF8)),
+            title: const Text('My Jobs', style: TextStyle(color: Colors.white)),
+            onTap: () {
+              Get.back(); // Close drawer
+              Get.toNamed(Routes.myJobs);
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.logout, color: Colors.redAccent),
             title: const Text('Logout', style: TextStyle(color: Colors.white)),
             onTap: () {
