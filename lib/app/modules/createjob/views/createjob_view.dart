@@ -63,40 +63,47 @@ class CreatejobView extends GetView<CreatejobController> {
                     'Job Title',
                     'e.g. Senior Frontend Engineer',
                     Icons.business_center_outlined,
+                    controller: controller.titleController,
                   ),
                   const SizedBox(height: 20),
                   _buildTextField(
                     'Company Name',
                     'Your Company',
                     Icons.auto_awesome_outlined,
+                    controller: controller.companyController,
                   ),
                   const SizedBox(height: 20),
                   _buildTextField(
                     'Location',
                     'e.g. Remote or Dhaka, BD',
                     Icons.location_on_outlined,
+                    controller: controller.locationController,
                   ),
                   const SizedBox(height: 20),
                   _buildTextField(
                     'Min. Experience (Years)',
                     '2',
                     Icons.history_toggle_off_outlined,
+                    controller: controller.expController,
+                    keyboardType: TextInputType.number,
                   ),
                   const SizedBox(height: 20),
                   _buildTextField(
                     'Skills Required (Comma separated)',
                     'React, Node.js, Python...',
                     Icons.psychology_outlined,
+                    controller: controller.skillsController,
                   ),
                   const SizedBox(height: 20),
                   _buildTextField(
                     'Job Description',
                     'Detail the responsibilities and expectations...',
                     Icons.text_snippet_outlined,
+                    controller: controller.descController,
                     maxLines: 5,
                   ),
                   const SizedBox(height: 32),
-                  Container(
+                  Obx(() => Container(
                     width: double.infinity,
                     height: 56,
                     decoration: BoxDecoration(
@@ -113,7 +120,7 @@ class CreatejobView extends GetView<CreatejobController> {
                       ],
                     ),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: controller.isLoading.value ? null : () => controller.postJob(),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,
                         shadowColor: Colors.transparent,
@@ -121,20 +128,29 @@ class CreatejobView extends GetView<CreatejobController> {
                           borderRadius: BorderRadius.circular(16),
                         ),
                       ),
-                      child: Text(
-                        'Post Job Now',
-                        style: GoogleFonts.inter(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      child: controller.isLoading.value
+                          ? const SizedBox(
+                              height: 24,
+                              width: 24,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2,
+                              ),
+                            )
+                          : Text(
+                              'Post Job Now',
+                              style: GoogleFonts.inter(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                     ),
-                  ),
+                  )),
                 ],
               ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 120),
               ],
             ),
           ),
@@ -169,6 +185,8 @@ class CreatejobView extends GetView<CreatejobController> {
     String hint,
     IconData icon, {
     int maxLines = 1,
+    TextEditingController? controller,
+    TextInputType? keyboardType,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,7 +207,9 @@ class CreatejobView extends GetView<CreatejobController> {
         ),
         const SizedBox(height: 10),
         TextField(
+          controller: controller,
           maxLines: maxLines,
+          keyboardType: keyboardType,
           style: const TextStyle(color: Colors.white, fontSize: 14),
           decoration: InputDecoration(
             hintText: hint,

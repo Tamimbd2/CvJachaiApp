@@ -12,6 +12,9 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/navbar/bindings/navbar_binding.dart';
 import '../modules/navbar/views/navbar_view.dart';
+import '../modules/job_apply/bindings/job_apply_binding.dart';
+import '../modules/job_apply/views/job_apply_view.dart';
+
 import '../modules/personalizatiion/bindings/personalizatiion_binding.dart';
 import '../modules/personalizatiion/views/personalizatiion_view.dart';
 import '../modules/resetpassword/bindings/resetpassword_binding.dart';
@@ -89,6 +92,11 @@ class AppPages {
       name: _Paths.navbar,
       page: () => const NavbarView(),
       binding: NavbarBinding(),
+    ),
+    GetPage(
+      name: _Paths.jobApply,
+      page: () => const JobApplyView(),
+      binding: JobApplyBinding(),
     ),
   ];
 }

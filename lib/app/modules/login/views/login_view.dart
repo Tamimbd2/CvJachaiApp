@@ -73,12 +73,15 @@ class LoginView extends GetView<LoginController> {
                       SizedBox(
                         width: 20,
                         height: 20,
-                        child: Checkbox(
-                          value: false,
-                          onChanged: (v) {},
-                          side: const BorderSide(color: Colors.white24),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4),
+                        child: Obx(
+                          () => Checkbox(
+                            value: controller.isRememberMe.value,
+                            onChanged: (v) => controller.isRememberMe.value = v ?? false,
+                            side: const BorderSide(color: Colors.white24),
+                            activeColor: const Color(0xFF6366F1),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4),
+                            ),
                           ),
                         ),
                       ),

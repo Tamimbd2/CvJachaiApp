@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../routes/app_pages.dart';
+import '../../navbar/controllers/navbar_controller.dart';
 import '../controllers/home_controller.dart';
+
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -64,31 +65,36 @@ class HomeView extends GetView<HomeController> {
                                 fontSize: 14,
                               ),
                             ),
-                            Text(
-                              'John Doe',
-                              style: GoogleFonts.inter(
-                                color: Colors.white,
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
+                            Obx(
+                              () => Text(
+                                controller.userName.value,
+                                style: GoogleFonts.inter(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ],
                         ),
-                        Container(
-                          padding: const EdgeInsets.all(2),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: const LinearGradient(
-                              colors: [Color(0xFF38BDF8), Color(0xFF9D4EDD)],
+                        GestureDetector(
+                          onTap: () => Scaffold.of(context).openEndDrawer(),
+                          child: Container(
+                            padding: const EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: const LinearGradient(
+                                colors: [Color(0xFF38BDF8), Color(0xFF9D4EDD)],
+                              ),
                             ),
-                          ),
-                          child: const CircleAvatar(
-                            radius: 26,
-                            backgroundColor: Color(0xFF1E293B),
-                            child: Icon(
-                              Icons.person,
-                              color: Colors.white,
-                              size: 30,
+                            child: const CircleAvatar(
+                              radius: 26,
+                              backgroundColor: Color(0xFF1E293B),
+                              child: Icon(
+                                Icons.person,
+                                color: Colors.white,
+                                size: 30,
+                              ),
                             ),
                           ),
                         ),
@@ -144,15 +150,15 @@ class HomeView extends GetView<HomeController> {
                       'Find best candidates using AI',
                       Icons.description_outlined,
                       const [Color(0xFF00D2FF), Color(0xFF3A7BD5)],
-                      () => Get.toNamed(Routes.cvshortlisting),
+                      () => Get.find<NavbarController>().changePage(3),
                     ),
                     const SizedBox(height: 16),
                     _buildActionCard(
-                      'Resume Personalization',
-                      'Get tailored AI career insights',
-                      Icons.person_outline,
+                      'Resume Optimizer',
+                      'Optimize any resume to ATS format',
+                      Icons.auto_fix_high,
                       const [Color(0xFF6366F1), Color(0xFFA855F7)],
-                      () => Get.toNamed(Routes.personalizatiion),
+                      () => Get.find<NavbarController>().changePage(4),
                     ),
                     const SizedBox(height: 16),
                     _buildActionCard(
@@ -160,7 +166,7 @@ class HomeView extends GetView<HomeController> {
                       'Jobs matching your skills',
                       Icons.work_outline,
                       const [Color(0xFF10B981), Color(0xFF3B82F6)],
-                      () => Get.toNamed(Routes.findjob),
+                      () => Get.find<NavbarController>().changePage(1),
                     ),
                     const SizedBox(height: 120),
                   ],

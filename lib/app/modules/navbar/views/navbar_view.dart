@@ -5,6 +5,7 @@ import '../../home/views/home_view.dart';
 import '../../findjob/views/findjob_view.dart';
 import '../../cvshortlisting/views/cvshortlisting_view.dart';
 import '../../personalizatiion/views/personalizatiion_view.dart';
+import '../../personalizatiion/controllers/personalizatiion_controller.dart';
 import '../../../routes/app_pages.dart';
 
 class NavbarView extends GetView<NavbarController> {
@@ -15,6 +16,7 @@ class NavbarView extends GetView<NavbarController> {
     return Scaffold(
       extendBody: true,
       backgroundColor: const Color(0xFF0F172A),
+      endDrawer: _buildSidebar(context),
       body: Stack(
         children: [
           Obx(() => IndexedStack(
@@ -28,6 +30,51 @@ class NavbarView extends GetView<NavbarController> {
                 ],
               )),
           _buildCustomNavBar(context),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSidebar(BuildContext context) {
+    return Drawer(
+      backgroundColor: const Color(0xFF0F172A),
+      child: Column(
+        children: [
+          DrawerHeader(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Color(0xFF38BDF8), Color(0xFF9D4EDD)],
+              ),
+            ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const CircleAvatar(
+                    radius: 35,
+                    backgroundColor: Color(0xFF1E293B),
+                    child: Icon(Icons.person, color: Colors.white, size: 40),
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    'My Profile',
+                    style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.logout, color: Colors.redAccent),
+            title: const Text('Logout', style: TextStyle(color: Colors.white)),
+            onTap: () {
+              // We can trigger logout from PersonalizatiionController or create a dedicated AuthController
+              // Since PersonalizatiionController has it, let's use it or move it to a service.
+              // For now, let's just use Get.offAllNamed to login after clearing storage.
+              Get.back(); // Close drawer
+              Get.find<PersonalizatiionController>().logout();
+            },
+          ),
         ],
       ),
     );
@@ -67,7 +114,7 @@ class NavbarView extends GetView<NavbarController> {
               onTap: () => Get.toNamed(Routes.createjob),
             ),
             _buildNavItem(Icons.description_outlined, 3),
-            _buildNavItem(Icons.person_outline, 4),
+            _buildNavItem(Icons.auto_fix_high, 4),
           ],
         ),
       ),

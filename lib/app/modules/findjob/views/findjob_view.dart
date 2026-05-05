@@ -2,7 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../routes/app_pages.dart';
+import '../../../data/models/job_model.dart';
+
 import '../controllers/findjob_controller.dart';
+
 
 class FindjobView extends GetView<FindjobController> {
   const FindjobView({super.key});
@@ -87,35 +91,39 @@ class FindjobView extends GetView<FindjobController> {
                   const SizedBox(height: 40),
 
                   // Job Cards
-                  _buildJobCard(
-                    'FD',
-                    'Frontend Developer',
-                    'TechNova Solutions',
-                    'Dhaka, Bangladesh',
-                    '1+ Years Exp.',
-                    '10d ago',
-                    false,
-                  ),
-                  const SizedBox(height: 16),
-                  _buildJobCard(
-                    'FD',
-                    'Flutter Developer',
-                    'AppNest',
-                    'Remote',
-                    '1+ Years Exp.',
-                    '10d ago',
-                    true, // Expanded
-                  ),
-                  const SizedBox(height: 16),
-                  _buildJobCard(
-                    'F&',
-                    'Flutter & Python Developer',
-                    'AT Tech',
-                    'Dhaka (Remote Friendly)',
-                    '2+ Years Exp.',
-                    '10d ago',
-                    false,
-                  ),
+                  Obx(() {
+                    if (controller.isLoading.value) {
+                      return const Center(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 100),
+                          child: CircularProgressIndicator(color: Colors.cyan),
+                        ),
+                      );
+                    }
+
+                    if (controller.jobs.isEmpty) {
+                      return Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 100),
+                          child: Text(
+                            'No jobs available at the moment.',
+                            style: GoogleFonts.inter(color: Colors.grey[500]),
+                          ),
+                        ),
+                      );
+                    }
+
+                    return Column(
+                      children: controller.jobs.asMap().entries.map((entry) {
+                        int idx = entry.key;
+                        Job job = entry.value;
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: _buildJobCard(idx, job),
+                        );
+                      }).toList(),
+                    );
+                  }),
                   const SizedBox(height: 120),
                 ],
               ),
@@ -127,28 +135,43 @@ class FindjobView extends GetView<FindjobController> {
 
 
 
-  Widget _buildJobCard(
-    String initials,
-    String title,
-    String company,
-    String location,
-    String exp,
-    String time,
-    bool isExpanded,
-  ) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: const Color(0xFF1E293B).withValues(alpha: 0.4),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color:
-              isExpanded ? Colors.cyan.withValues(alpha: 0.3) : Colors.white10,
+  Widget _buildJobCard(int index, Job job) {
+    final String initials = job.title != null && job.title!.isNotEmpty
+        ? job.title!
+            .trim()
+            .split(' ')
+            .where((e) => e.isNotEmpty)
+            .map((e) => e[0])
+            .join('')
+            .toUpperCase()
+        : 'JD';
+    final String title = job.title ?? 'Job Title';
+    final String company = job.companyName ?? 'Company';
+    final String location = job.location ?? 'Location';
+    final String exp = "${job.minExperience ?? 0}+ Years Exp.";
+    final String time = job.createdAt != null ? job.createdAt!.split('T')[0] : 'Today';
+
+    final isExpanded = controller.expandedIndex.value == index;
+    return GestureDetector(
+      onTap: () => controller.toggleExpanded(index),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: const Color(0xFF1E293B).withValues(alpha: 0.4),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: isExpanded
+                ? Colors.cyan.withValues(alpha: 0.3)
+                : Colors.white10,
+          ),
         ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        child: AnimatedSize(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -234,7 +257,9 @@ class FindjobView extends GetView<FindjobController> {
                   ),
                   if (!isExpanded) ...[
                     const SizedBox(height: 16),
-                    _buildApplyButton('Apply Now'),
+                    _buildApplyButton('Apply Now', onTap: () {
+                      Get.toNamed(Routes.jobApply, arguments: job);
+                    }),
                   ],
                 ],
               ),
@@ -252,7 +277,7 @@ class FindjobView extends GetView<FindjobController> {
             ),
             const SizedBox(height: 10),
             Text(
-              'Develop cross-platform mobile apps with Flutter.',
+              job.description ?? 'No description provided.',
               style: GoogleFonts.inter(color: Colors.grey[400], fontSize: 14),
             ),
             const SizedBox(height: 20),
@@ -268,42 +293,52 @@ class FindjobView extends GetView<FindjobController> {
             Wrap(
               spacing: 20,
               runSpacing: 10,
-              children: [
-                _buildSkillItem('Flutter'),
-                _buildSkillItem('Dart'),
-                _buildSkillItem('Firebase'),
-              ],
+              children: (job.skillsRequired ?? '')
+                  .split(',')
+                  .map((skill) => _buildSkillItem(skill.trim()))
+                  .toList(),
             ),
             const SizedBox(height: 30),
             Row(
               children: [
-                _buildApplyButton('Apply for this position', isLarge: true),
+                _buildApplyButton(
+                  'Apply for this position',
+                  isLarge: true,
+                  onTap: () {
+                    Get.toNamed(Routes.jobApply, arguments: job);
+                  },
+                ),
                 const SizedBox(width: 12),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 12,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.05),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.white10),
-                  ),
-                  child: Text(
-                    'Close',
-                    style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
+                GestureDetector(
+                  onTap: () => controller.toggleExpanded(index),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 12,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.05),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.white10),
+                    ),
+                    child: Text(
+                      'Close',
+                      style: GoogleFonts.inter(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
+            ],
           ],
-        ],
+        ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildInfoIcon(IconData icon, String label) {
     return Row(
@@ -336,8 +371,10 @@ class FindjobView extends GetView<FindjobController> {
     );
   }
 
-  Widget _buildApplyButton(String label, {bool isLarge = false}) {
-    return Container(
+  Widget _buildApplyButton(String label, {bool isLarge = false, VoidCallback? onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
       padding: EdgeInsets.symmetric(
         horizontal: isLarge ? 24 : 16,
         vertical: 10,
@@ -363,6 +400,7 @@ class FindjobView extends GetView<FindjobController> {
           fontWeight: FontWeight.bold,
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }
