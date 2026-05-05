@@ -61,12 +61,10 @@ class JobApplyController extends GetxController {
       String fileName = selectedFile.value!.path.split('/').last;
       
       dio.FormData data = dio.FormData.fromMap({
-        'files': [
-          await dio.MultipartFile.fromFile(
-            selectedFile.value!.path,
-            filename: fileName,
-          )
-        ],
+        'resume_file': await dio.MultipartFile.fromFile(
+          selectedFile.value!.path,
+          filename: fileName,
+        ),
         'job': job.id,
         'candidate_name': nameController.text.trim(),
         'candidate_email': emailController.text.trim(),

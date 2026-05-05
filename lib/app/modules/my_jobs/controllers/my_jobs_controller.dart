@@ -94,4 +94,28 @@ class MyJobsController extends GetxController {
       Get.snackbar('Error', 'Failed to delete job: $e');
     }
   }
+
+  Future<List<dynamic>> fetchApplications(String jobId) async {
+    try {
+      final userData = _box.read('user_data');
+      final token = userData?['access'] ?? userData?['token'];
+      if (token == null) return [];
+
+      var response = await _apiService.get(
+        '/jobs/$jobId/applications/',
+        options: dio.Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        return response.data;
+      }
+    } catch (e) {
+      debugPrint('Error fetching applications: $e');
+    }
+    return [];
+  }
 }
