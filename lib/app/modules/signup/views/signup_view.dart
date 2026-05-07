@@ -46,9 +46,21 @@ class SignupView extends GetView<SignupController> {
               // Names Row
               Row(
                 children: [
-                  Expanded(child: _buildNameField('First Name', 'John')),
+                  Expanded(
+                    child: _buildNameField(
+                      'First Name',
+                      'John',
+                      controller: controller.firstNameController,
+                    ),
+                  ),
                   const SizedBox(width: 16),
-                  Expanded(child: _buildNameField('Last Name', 'Doe')),
+                  Expanded(
+                    child: _buildNameField(
+                      'Last Name',
+                      'Doe',
+                      controller: controller.lastNameController,
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 24),
@@ -59,6 +71,7 @@ class SignupView extends GetView<SignupController> {
               _buildTextField(
                 hint: 'name@company.com',
                 icon: Icons.email_outlined,
+                controller: controller.emailController,
               ),
               const SizedBox(height: 24),
 
@@ -69,6 +82,7 @@ class SignupView extends GetView<SignupController> {
                 hint: '••••••••',
                 icon: Icons.shield_outlined,
                 isPassword: true,
+                controller: controller.passwordController,
               ),
               const SizedBox(height: 24),
 
@@ -79,44 +93,58 @@ class SignupView extends GetView<SignupController> {
                 hint: '••••••••',
                 icon: Icons.shield_outlined,
                 isPassword: true,
+                controller: controller.confirmPasswordController,
               ),
               const SizedBox(height: 16),
 
               const SizedBox(height: 20),
 
               // Sign Up Button
-              Container(
-                width: double.infinity,
-                height: 56,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF8B5CF6), Color(0xFF6366F1)],
+              Obx(
+                () => Container(
+                  width: double.infinity,
+                  height: 56,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF8B5CF6), Color(0xFF6366F1)],
+                    ),
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF8B5CF6).withValues(alpha: 0.4),
+                        blurRadius: 15,
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
                   ),
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFF8B5CF6).withValues(alpha: 0.4),
-                      blurRadius: 15,
-                      offset: const Offset(0, 8),
+                  child: ElevatedButton(
+                    onPressed: controller.isLoading.value
+                        ? null
+                        : () => controller.signup(),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
                     ),
-                  ],
-                ),
-                child: ElevatedButton(
-                  onPressed: () => Get.offAllNamed(Routes.navbar),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    shadowColor: Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
-                  child: Text(
-                    'Sign Up',
-                    style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    child: controller.isLoading.value
+                        ? const SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            ),
+                          )
+                        : Text(
+                            'Sign Up',
+                            style: GoogleFonts.inter(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                   ),
                 ),
               ),
@@ -214,13 +242,15 @@ class SignupView extends GetView<SignupController> {
     );
   }
 
-  Widget _buildNameField(String label, String hint) {
+  Widget _buildNameField(String label, String hint,
+      {TextEditingController? controller}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildLabel(label),
         const SizedBox(height: 10),
         TextField(
+          controller: controller,
           style: const TextStyle(color: Colors.white, fontSize: 15),
           decoration: InputDecoration(
             hintText: hint,
@@ -260,8 +290,10 @@ class SignupView extends GetView<SignupController> {
     required String hint,
     required IconData icon,
     bool isPassword = false,
+    TextEditingController? controller,
   }) {
     return TextField(
+      controller: controller,
       obscureText: isPassword,
       style: const TextStyle(color: Colors.white, fontSize: 15),
       decoration: InputDecoration(

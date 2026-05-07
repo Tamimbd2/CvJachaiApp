@@ -17,7 +17,7 @@ void main() async {
   
   runApp(
     GetMaterialApp(
-      title: "Application",
+      title: "CV JACHAI",
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xFF0F172A),
         brightness: Brightness.dark,
