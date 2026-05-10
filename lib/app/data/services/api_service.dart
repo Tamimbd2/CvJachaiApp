@@ -19,10 +19,14 @@ class ApiService extends getx.GetxService {
       ),
     );
 
-    // Add interceptors for logging or token handling
+    // Add interceptors for error logging only
     _dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
+      request: false,
+      requestHeader: false,
+      requestBody: false,
+      responseHeader: false,
+      responseBody: false,
+      error: true,
     ));
 
     return this;

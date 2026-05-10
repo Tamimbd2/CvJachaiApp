@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../../routes/app_pages.dart';
@@ -56,8 +55,6 @@ class LoginController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        debugPrint(json.encode(response.data));
-        
         if (isRememberMe.value) {
           _box.write('email', emailController.text.trim());
           _box.write('password', passwordController.text.trim());
