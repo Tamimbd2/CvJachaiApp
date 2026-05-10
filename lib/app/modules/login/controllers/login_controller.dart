@@ -5,12 +5,10 @@ import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../../routes/app_pages.dart';
 import '../../../data/services/api_service.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import '../../../data/services/google_auth_service.dart';
 
 class LoginController extends GetxController {
-  final GoogleSignIn _googleSignIn = GoogleSignIn(
-    scopes: ['email', 'https://www.googleapis.com/auth/userinfo.profile'],
-  );
+  final _googleAuthService = Get.find<GoogleAuthService>();
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -97,32 +95,15 @@ class LoginController extends GetxController {
   Future<void> signInWithGoogle() async {
     try {
       isLoading.value = true;
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final userData = await _googleAuthService.signIn();
       
-      if (googleUser == null) {
-        isLoading.value = false;
-        return;
-      }
+      if (userData != null) {
+        // We still use _box for simple session check
+        _box.write('is_logged_in', true);
+        _box.write('user_data', userData['user']); // Assuming 'user' object is in response
 
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-      final String? idToken = googleAuth.idToken;
-
-      debugPrint('Google ID Token: $idToken');
-
-      if (idToken != null) {
-        var response = await _apiService.post(
-          '/auth/google',
-          data: {"token": idToken},
-        );
-
-        if (response.statusCode == 200 || response.statusCode == 201) {
-          _box.write('is_logged_in', true);
-          _box.write('user_data', response.data);
-          Get.snackbar('Success', 'Google Sign-In successful');
-          Get.offAllNamed(Routes.navbar);
-        } else {
-          Get.snackbar('Error', 'Google Sign-In failed');
-        }
+        Get.snackbar('Success', 'Google Sign-In successful');
+        Get.offAllNamed(Routes.navbar);
       }
     } catch (e) {
       debugPrint('Google Sign-In Error: $e');
