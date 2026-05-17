@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'api_service.dart';
 
 class GoogleAuthService extends GetxService {
   final GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -16,7 +17,7 @@ class GoogleAuthService extends GetxService {
   final _storage = const FlutterSecureStorage();
   
   // Updated with the actual API endpoint from your ApiService
-  final String _apiUrl = 'https://cvjachai-api.onrender.com/api/auth/google';
+  final String _apiUrl = '${ApiService.baseUrl}/auth/google';
 
   Future<Map<String, dynamic>?> signIn() async {
     try {

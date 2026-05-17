@@ -4,7 +4,8 @@ import 'package:get/get.dart' as getx;
 class ApiService extends getx.GetxService {
   late Dio _dio;
   
-  static const String baseUrl = 'https://cvjachai-api.onrender.com/api';
+  static const String rootUrl = 'https://cvjachai.online';
+  static const String baseUrl = '$rootUrl/api';
 
   Future<ApiService> init() async {
     _dio = Dio(

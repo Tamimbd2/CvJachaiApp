@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../data/services/api_service.dart';
 import '../controllers/my_jobs_controller.dart';
 
 class MyJobsView extends GetView<MyJobsController> {
@@ -316,7 +317,7 @@ class MyJobsView extends GetView<MyJobsController> {
               onPressed: () async {
                 String resumeUrl = app['resume_file'];
                 if (!resumeUrl.startsWith('http')) {
-                  resumeUrl = 'https://cvjachai-api.onrender.com$resumeUrl';
+                  resumeUrl = '${ApiService.rootUrl}$resumeUrl';
                 }
                 final Uri url = Uri.parse(resumeUrl);
                 if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
