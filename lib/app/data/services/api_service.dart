@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' as getx;
+import 'package:get_storage/get_storage.dart';
 
 class ApiService extends getx.GetxService {
   late Dio _dio;
@@ -28,6 +30,32 @@ class ApiService extends getx.GetxService {
       responseHeader: false,
       responseBody: false,
       error: true,
+    ));
+
+    // Handle global 401 Unauthorized errors (excluding auth endpoints)
+    _dio.interceptors.add(InterceptorsWrapper(
+      onError: (DioException e, handler) {
+        if (e.response?.statusCode == 401) {
+          final path = e.requestOptions.path;
+          if (!path.contains('/auth/')) {
+            final box = GetStorage();
+            box.remove('is_logged_in');
+            box.remove('user_data');
+
+            if (getx.Get.currentRoute != '/login') {
+              getx.Get.offAllNamed('/login');
+              getx.Get.snackbar(
+                'Session Expired',
+                'Your session has expired. Please login again.',
+                snackPosition: getx.SnackPosition.BOTTOM,
+                backgroundColor: const Color(0xFFEF4444).withValues(alpha: 0.1),
+                colorText: Colors.white,
+              );
+            }
+          }
+        }
+        return handler.next(e);
+      },
     ));
 
     return this;

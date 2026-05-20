@@ -27,9 +27,15 @@ class JobApplyController extends GetxController {
   void _loadUserData() {
     final userData = _box.read('user_data');
     if (userData != null) {
-      // Adjust keys based on your actual API response structure
-      nameController.text = userData['name'] ?? '';
-      emailController.text = userData['email'] ?? '';
+      // Robust checking for both nested and root keys
+      nameController.text = userData['user']?['full_name'] ?? 
+                            userData['user']?['name'] ?? 
+                            userData['full_name'] ?? 
+                            userData['name'] ?? 
+                            '';
+      emailController.text = userData['user']?['email'] ?? 
+                            userData['email'] ?? 
+                            '';
     }
   }
 

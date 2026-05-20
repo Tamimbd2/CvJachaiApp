@@ -97,7 +97,7 @@ class LoginController extends GetxController {
       if (userData != null) {
         // We still use _box for simple session check
         _box.write('is_logged_in', true);
-        _box.write('user_data', userData['user']); // Assuming 'user' object is in response
+        _box.write('user_data', userData); // Save full response including tokens
 
         Get.snackbar('Success', 'Google Sign-In successful');
         Get.offAllNamed(Routes.navbar);
