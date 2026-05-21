@@ -54,22 +54,23 @@ class CvshortlistingController extends GetxController {
 
       List<dio.MultipartFile> multipartFiles = [];
       for (var file in selectedFiles) {
-        String fileName = file.path.split('/').last;
+        String fileName = file.path.split(RegExp(r'[/\\]')).last;
         multipartFiles.add(await dio.MultipartFile.fromFile(file.path, filename: fileName));
       }
 
       dio.FormData data = dio.FormData.fromMap({
-        'files': multipartFiles,
+        'resume_files': multipartFiles.length == 1 ? multipartFiles.first : multipartFiles,
         'job_circular': jobCircularController.text.trim(),
-        'top_k': topKController.text.trim(),
+        'top_k': topKController.text.trim().isEmpty ? '5' : topKController.text.trim(),
         'skills': skillsController.text.trim(),
-        'min_experience': minExpController.text.trim(),
+        'min_experience': minExpController.text.trim().isEmpty ? '0' : minExpController.text.trim(),
       });
 
       var response = await _apiService.post(
         '/classify',
         data: data,
         options: dio.Options(
+          contentType: 'multipart/form-data',
           headers: {
             'Authorization': 'Bearer $token',
           },
