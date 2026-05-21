@@ -27,12 +27,16 @@ class Job {
 
   factory Job.fromJson(Map<String, dynamic> json) {
     return Job(
-      id: json['id'],
+      // Django returns int IDs — safely convert to String to avoid null
+      id: json['id']?.toString(),
       createdByEmail: json['created_by_email'],
       title: json['title'],
       description: json['description'],
       skillsRequired: json['skills_required'],
-      minExperience: json['min_experience'],
+      // min_experience can be int or String from API
+      minExperience: json['min_experience'] is int
+          ? json['min_experience']
+          : int.tryParse(json['min_experience']?.toString() ?? '0'),
       companyName: json['company_name'],
       location: json['location'],
       createdAt: json['created_at'],

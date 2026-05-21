@@ -15,117 +15,178 @@ class FindjobView extends GetView<FindjobController> {
     return Stack(
         children: [
           SafeArea(
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 10),
+            child: RefreshIndicator(
+              onRefresh: controller.fetchJobs,
+              color: Colors.cyan,
+              backgroundColor: const Color(0xFF1E293B),
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 10),
 
-                  // Tag
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.cyan.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.cyan.withValues(alpha: 0.3)),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(
-                          Icons.auto_awesome,
-                          color: Colors.cyan,
-                          size: 14,
-                        ),
-                        const SizedBox(width: 6),
-                        Text(
-                          'Available Positions',
-                          style: GoogleFonts.inter(
+                    // Tag
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.cyan.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Colors.cyan.withValues(alpha: 0.3)),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.auto_awesome,
                             color: Colors.cyan,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
+                            size: 14,
                           ),
-                        ),
-                      ],
+                          const SizedBox(width: 6),
+                          Text(
+                            'Available Positions',
+                            style: GoogleFonts.inter(
+                              color: Colors.cyan,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
-                  // Title
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'Find Your Dream ',
-                          style: GoogleFonts.inter(
-                            color: Colors.white,
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
+                    // Title
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Find Your Dream ',
+                            style: GoogleFonts.inter(
+                              color: Colors.white,
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        TextSpan(
-                          text: 'Job',
-                          style: GoogleFonts.inter(
-                            color: const Color(0xFF9D4EDD),
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
+                          TextSpan(
+                            text: 'Job',
+                            style: GoogleFonts.inter(
+                              color: const Color(0xFF9D4EDD),
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    'Explore opportunities that match your skills. Our AI-driven platform connects top talent with innovative companies.',
-                    style: GoogleFonts.inter(
-                      color: Colors.grey[400],
-                      fontSize: 14,
-                      height: 1.5,
+                    const SizedBox(height: 12),
+                    Text(
+                      'Explore opportunities that match your skills. Our AI-driven platform connects top talent with innovative companies.',
+                      style: GoogleFonts.inter(
+                        color: Colors.grey[400],
+                        fontSize: 14,
+                        height: 1.5,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 40),
+                    const SizedBox(height: 40),
 
-                  // Job Cards
-                  Obx(() {
-                    if (controller.isLoading.value) {
-                      return const Center(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 100),
-                          child: CircularProgressIndicator(color: Colors.cyan),
-                        ),
-                      );
-                    }
-
-                    if (controller.jobs.isEmpty) {
-                      return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 100),
-                          child: Text(
-                            'No jobs available at the moment.',
-                            style: GoogleFonts.inter(color: Colors.grey[500]),
+                    // Job Cards
+                    Obx(() {
+                      if (controller.isLoading.value) {
+                        return const Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 100),
+                            child: CircularProgressIndicator(color: Colors.cyan),
                           ),
-                        ),
-                      );
-                    }
-
-                    return Column(
-                      children: controller.jobs.asMap().entries.map((entry) {
-                        int idx = entry.key;
-                        Job job = entry.value;
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 16),
-                          child: _buildJobCard(idx, job),
                         );
-                      }).toList(),
-                    );
-                  }),
-                  const SizedBox(height: 120),
-                ],
+                      }
+
+                      // Error state with retry button
+                      if (controller.errorMessage.value.isNotEmpty && controller.jobs.isEmpty) {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 80),
+                          child: Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.wifi_off_rounded, size: 64, color: Colors.grey[700]),
+                                const SizedBox(height: 16),
+                                Text(
+                                  controller.errorMessage.value,
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.inter(
+                                    color: Colors.grey[500],
+                                    fontSize: 14,
+                                    height: 1.5,
+                                  ),
+                                ),
+                                const SizedBox(height: 24),
+                                GestureDetector(
+                                  onTap: controller.fetchJobs,
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 12),
+                                    decoration: BoxDecoration(
+                                      gradient: const LinearGradient(
+                                        colors: [Color(0xFF00D2FF), Color(0xFF3A7BD5)],
+                                      ),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Text(
+                                      'Retry',
+                                      style: GoogleFonts.inter(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+
+                      if (controller.jobs.isEmpty) {
+                        return Center(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 100),
+                            child: Column(
+                              children: [
+                                Icon(Icons.work_off_outlined, size: 64, color: Colors.grey[700]),
+                                const SizedBox(height: 16),
+                                Text(
+                                  'No jobs available at the moment.',
+                                  style: GoogleFonts.inter(color: Colors.grey[500]),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  'Pull down to refresh',
+                                  style: GoogleFonts.inter(color: Colors.grey[700], fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+
+                      return Column(
+                        children: controller.jobs.asMap().entries.map((entry) {
+                          int idx = entry.key;
+                          Job job = entry.value;
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 16),
+                            child: _buildJobCard(idx, job),
+                          );
+                        }).toList(),
+                      );
+                    }),
+                    const SizedBox(height: 120),
+                  ],
+                ),
               ),
             ),
           ),
